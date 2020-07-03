@@ -33,24 +33,17 @@
         }   
         stage('Build result') {
           steps {
-            dir('./result') {
-              script {
-                FAILED_STAGE=env.STAGE_NAME
-                echo "Build image"
-                result = docker.build('ocd-cloud-lyon/result')
-                BUILD_DONE = 1    
-              }
-            }
+            sh 'docker build -t ocd-cloud-lyon/result ./result --network=host'
           }
         } 
         stage('Build vote') {
           steps {
-            sh 'docker build -t dockersamples/vote ./vote'
+            sh 'docker build -t ocd-cloud-lyon/vote ./vote --network=host'
           }
         }
         stage('Build worker') {
           steps {
-            sh 'docker build -t dockersamples/worker ./worker'
+            sh 'docker build -t ocd-cloud-lyon/worker ./worker --network=host'
           }
         }
     /*stage('Push result image') {
