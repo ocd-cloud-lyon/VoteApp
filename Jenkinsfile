@@ -33,7 +33,14 @@
         }   
         stage('Build result') {
           steps {
-            sh 'docker build -t dockersamples/result ./result'
+            dir('./result') {
+              script {
+                FAILED_STAGE=env.STAGE_NAME
+                echo "Build image"
+                result = docker.build('ocd-cloud-lyon/result')
+                BUILD_DONE = 1    
+              }
+            }
           }
         } 
         stage('Build vote') {
