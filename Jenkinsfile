@@ -19,34 +19,33 @@
     agent any
 
      stages {
-         stage('Clone repository') {
+        stage('Clone repository') {
             /* Let's make sure we have the repository cloned to our workspace */
              steps {
                 //checkout scm
-        script{
-          FAILED_STAGE=env.STAGE_NAME
-          echo "Clone repository"
-        }
-        git credentialsId: 'github-credential', url: 'https://github.com/ocd-cloud-lyon/VoteApp/'
+              script{
+                  FAILED_STAGE=env.STAGE_NAME
+                  echo "Clone repository"
+              }
+              git credentialsId: 'github-credential', url: 'https://github.com/ocd-cloud-lyon/VoteApp/'
              }
 
         }   
-  stages {
-    stage('Build result') {
-      steps {
-        sh 'docker build -t dockersamples/result ./result'
-      }
-    } 
-    stage('Build vote') {
-      steps {
-        sh 'docker build -t dockersamples/vote ./vote'
-      }
-    }
-    stage('Build worker') {
-      steps {
-        sh 'docker build -t dockersamples/worker ./worker'
-      }
-    }
+        stage('Build result') {
+          steps {
+            sh 'docker build -t dockersamples/result ./result'
+          }
+        } 
+        stage('Build vote') {
+          steps {
+            sh 'docker build -t dockersamples/vote ./vote'
+          }
+        }
+        stage('Build worker') {
+          steps {
+            sh 'docker build -t dockersamples/worker ./worker'
+          }
+        }
     /*stage('Push result image') {
       when {
         branch 'master'
