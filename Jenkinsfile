@@ -46,17 +46,18 @@
             sh 'docker build -t ocd-cloud-lyon/worker ./worker --network=host'
           }
         }
-    /*stage('Push result image') {
-      when {
-        branch 'master'
-      }
+    stage('Push result image') {
       steps {
-        withDockerRegistry(credentialsId: 'dockerbuildbot-index.docker.io', url:'') {
-          sh 'docker push dockersamples/result'
+        script{
+          docker.withRegistry(registry, registryCredential) {
+            docker.image('ocd-cloud-lyon/result').push('latest')
+            docker.image('ocd-cloud-lyon/result').push("${env.BUILD_NUMBER}")
+                }
         }
+        
       }
-    }*/
-    /*stage('Push vote image') {
+    }
+      /*stage('Push vote image') {
       when {
         branch 'master'
       }
