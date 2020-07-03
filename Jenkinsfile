@@ -1,11 +1,3 @@
- def createNamespace (namespace) {
-    echo "Creating namespace ${namespace} if needed"
-
-    sh "[ ! -z \"\$(kubectl get ns ${namespace} -o name 2>/dev/null)\" ] || kubectl create ns ${namespace}"
-}
-
- 
-
  pipeline {
     options {
         // Build auto timeout
@@ -16,10 +8,10 @@
     registry = "https://573329840855.dkr.ecr.eu-west-3.amazonaws.com"
     registryCredential = 'ecr:eu-west-3:aws-ecr-credential'
         dockerImage = ''
-        NomProjet = 'hello-you'
-        NameSpace = 'hello-you-ns'
-    DeployName = 'hello-you-deploy'
-    ServiceName = 'hello-you-svc'
+        NomProjet = 'VoteApp'
+        NameSpace = 'VoteApp-NS'
+    //DeployName = 'VoteApp-NS'
+    //ServiceName = 'hello-you-svc'
     RuningImageBuild = 0
     TargetImageBuild = 0
     }
@@ -55,7 +47,7 @@
         sh 'docker build -t dockersamples/worker ./worker'
       }
     }
-    stage('Push result image') {
+    /*stage('Push result image') {
       when {
         branch 'master'
       }
@@ -64,8 +56,8 @@
           sh 'docker push dockersamples/result'
         }
       }
-    }
-    stage('Push vote image') {
+    }*/
+    /*stage('Push vote image') {
       when {
         branch 'master'
       }
@@ -74,8 +66,8 @@
           sh 'docker push dockersamples/vote'
         }
       }
-    }
-    stage('Push worker image') {
+    }*/
+    /*stage('Push worker image') {
       when {
         branch 'master'
       }
@@ -84,6 +76,6 @@
           sh 'docker push dockersamples/worker'
         }
       }
-    }
+    }*/
   }
 }
