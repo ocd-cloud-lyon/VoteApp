@@ -68,6 +68,17 @@
         
       }
     }
+    stage('Push worker image') {
+      steps {
+        script{
+          docker.withRegistry(registry, registryCredential) {
+            docker.image('ocd-cloud-lyon/worker').push('latest')
+            docker.image('ocd-cloud-lyon/worker').push("${env.BUILD_NUMBER}")
+                }
+        }
+        
+      }
+    }
       /*stage('Push vote image') {
       when {
         branch 'master'
