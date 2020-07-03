@@ -57,6 +57,17 @@
         
       }
     }
+    stage('Push vote image') {
+      steps {
+        script{
+          docker.withRegistry(registry, registryCredential) {
+            docker.image('ocd-cloud-lyon/vote').push('latest')
+            docker.image('ocd-cloud-lyon/vote').push("${env.BUILD_NUMBER}")
+                }
+        }
+        
+      }
+    }
       /*stage('Push vote image') {
       when {
         branch 'master'
