@@ -15,7 +15,7 @@ spec:
   selector: 
     app: redis
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: redis
@@ -55,7 +55,7 @@ spec:
   selector: 
     app: db
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: db
@@ -160,7 +160,7 @@ spec:
   selector:
     app: vote
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: vote
@@ -196,7 +196,7 @@ spec:
   selector: 
     app: worker
 --- 
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata: 
   labels: 
