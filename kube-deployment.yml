@@ -1,6 +1,6 @@
 # redis
 --- 
-apiVersion: v1
+apiVersion: apps/v1
 kind: Service
 metadata: 
   labels: 
@@ -40,7 +40,7 @@ spec:
 
 # db
 --- 
-apiVersion: v1
+apiVersion: apps/v1
 kind: Service
 metadata: 
   labels: 
@@ -92,7 +92,7 @@ spec:
         persistentVolumeClaim:
           claimName: postgres-pv-claim
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgres-pv-claim
@@ -145,7 +145,7 @@ spec:
 
 # vote
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Service
 metadata:
   name: vote
@@ -185,7 +185,7 @@ spec:
 
 # worker
 --- 
-apiVersion: v1
+apiVersion: apps/v1
 kind: Service
 metadata: 
   labels: 
