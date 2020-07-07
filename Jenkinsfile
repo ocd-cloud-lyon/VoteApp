@@ -92,7 +92,7 @@ pipeline {
           echo "delete docker image"
         }
 
-         sh '/usr/local/bin/helm install VoteApp /VoteApp'
+         sh '/usr/local/bin/helm install voteapp VoteApp'
 
         //kubernetesDeploy configs: 'kube-deployment.yml', kubeConfig: [path: ''], kubeconfigId: 'K8S-config', secretName: 'ecr:eu-west-3:aws-ecr-credential', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
 
