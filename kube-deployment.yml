@@ -1,6 +1,6 @@
 # redis
 --- 
-apiVersion: apps/v1
+apiVersion: v1
 kind: Service
 metadata: 
   labels: 
@@ -15,7 +15,7 @@ spec:
   selector: 
     app: redis
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: redis
@@ -40,7 +40,7 @@ spec:
 
 # db
 --- 
-apiVersion: apps/v1
+apiVersion: v1
 kind: Service
 metadata: 
   labels: 
@@ -55,7 +55,7 @@ spec:
   selector: 
     app: db
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: db
@@ -92,7 +92,7 @@ spec:
         persistentVolumeClaim:
           claimName: postgres-pv-claim
 ---
-apiVersion: apps/v1
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgres-pv-claim
@@ -145,7 +145,7 @@ spec:
 
 # vote
 ---
-apiVersion: apps/v1
+apiVersion: v1
 kind: Service
 metadata:
   name: vote
@@ -160,7 +160,7 @@ spec:
   selector:
     app: vote
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: vote
@@ -185,7 +185,7 @@ spec:
 
 # worker
 --- 
-apiVersion: apps/v1
+apiVersion: v1
 kind: Service
 metadata: 
   labels: 
@@ -196,7 +196,7 @@ spec:
   selector: 
     app: worker
 --- 
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata: 
   labels: 
