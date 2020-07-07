@@ -33,16 +33,19 @@
         }   
         stage('Build result') {
           steps {
+            // --network=host added to ensure that container has internet access while being build
             sh 'docker build -t ocd-cloud-lyon/result ./result --network=host'
           }
         } 
         stage('Build vote') {
           steps {
+            // --network=host added to ensure that container has internet access while being build
             sh 'docker build -t ocd-cloud-lyon/vote ./vote --network=host'
           }
         }
         stage('Build worker') {
           steps {
+            // --network=host added to ensure that container has internet access while being build
             sh 'docker build -t ocd-cloud-lyon/worker ./worker --network=host'
           }
         }
@@ -79,25 +82,5 @@
         
       }
     }
-      /*stage('Push vote image') {
-      when {
-        branch 'master'
-      }
-      steps {
-        withDockerRegistry(credentialsId: 'dockerbuildbot-index.docker.io', url:'') {
-          sh 'docker push dockersamples/vote'
-        }
-      }
-    }*/
-    /*stage('Push worker image') {
-      when {
-        branch 'master'
-      }
-      steps {
-        withDockerRegistry(credentialsId: 'dockerbuildbot-index.docker.io', url:'') {
-          sh 'docker push dockersamples/worker'
-        }
-      }
-    }*/
   }
 }
