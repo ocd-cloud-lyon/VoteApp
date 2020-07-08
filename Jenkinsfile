@@ -93,27 +93,9 @@ pipeline {
         }
 
        
-
-        //kubernetesDeploy configs: 'kube-deployment.yml', kubeConfig: [path: ''], kubeconfigId: 'K8S-config', secretName: 'ecr:eu-west-3:aws-ecr-credential', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
-
-        //validate deployement
-        sleep 30
         script {
           withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-file', namespace: '', serverUrl: '') {
-            //RuningImageBuild = sh (script: 'kubectl get pods --all-namespaces -o jsonpath="{..image}" -l app=hello-you |tr -s "[[:space:]]" "\n" | uniq -c | cut -d: -f2', returnStdout: true)
-            sh '/usr/local/bin/helm install voteapp VoteApp'
-            //Bug dans le script on bypass
-            //RuningImageBuild = sh (script: 'kubectl get pods --all-namespaces -o jsonpath="{..image}" -l app=hello-you --field-selector=status.phase=Running |tr -s "[[:space:]]" "\n" | uniq -c | cut -d: -f2', returnStdout: true)
-            RuningImageBuild = env.BUILD_NUMBER.toInteger()
-        }
-
-        TargetImageBuild = env.BUILD_NUMBER.toInteger()
-
-        if (RuningImageBuild.toInteger() == TargetImageBuild ) {
-          echo "Build successfull"
-        } else {
-          echo "Build failed"
-          //error 'deploy failed'
+            sh '/usr/local/bin/helm upgrade voteapp VoteApp'
           }
         }
       }
