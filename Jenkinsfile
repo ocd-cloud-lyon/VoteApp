@@ -92,7 +92,7 @@ pipeline {
           echo "delete docker image"
         }
 
-       //  sh 'sudo /usr/local/bin/helm install voteapp VoteApp'
+       
 
         //kubernetesDeploy configs: 'kube-deployment.yml', kubeConfig: [path: ''], kubeconfigId: 'K8S-config', secretName: 'ecr:eu-west-3:aws-ecr-credential', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
 
@@ -101,7 +101,7 @@ pipeline {
         script {
           withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-file', namespace: '', serverUrl: '') {
             //RuningImageBuild = sh (script: 'kubectl get pods --all-namespaces -o jsonpath="{..image}" -l app=hello-you |tr -s "[[:space:]]" "\n" | uniq -c | cut -d: -f2', returnStdout: true)
-
+            sh '/usr/local/bin/helm install voteapp VoteApp'
             //Bug dans le script on bypass
             //RuningImageBuild = sh (script: 'kubectl get pods --all-namespaces -o jsonpath="{..image}" -l app=hello-you --field-selector=status.phase=Running |tr -s "[[:space:]]" "\n" | uniq -c | cut -d: -f2', returnStdout: true)
             RuningImageBuild = env.BUILD_NUMBER.toInteger()
