@@ -39,39 +39,6 @@ pipeline {
       }
     } 
     
-   stage ('Scan_Result'){
-    steps {
-      script { 
-        FAILED_STAGE=env.STAGE_NAME
-        echo "Scan Prisma"
-        Prisma_Scan_launched = 1
-      }
-      
-      prismaCloudScanImage  ca: '',
-                            cert: '',
-                            dockerAddress: 'unix:///var/run/docker.sock',
-                            ignoreImageBuildTime: true,
-                            image: 'ocd-cloud-lyon/result',
-                            key: '',
-                            logLevel: 'info',
-                            podmanPath: '',
-                            project: '',
-                            resultsFile: 'prisma-cloud-scan-results-result.json'
-      /*prismaCloudScanImage  ca: '', 
-                            cert: '',
-                            dockerAddress: 'unix:///var/run/docker.sock', 
-                            image: 'ocd-cloud-lyon/result:latest', 
-                            key: '', 
-                            logLevel: 'info', 
-                            podmanPath: '', 
-                            project: '', 
-                            resultsFile: 'prisma-cloud-scan-results-result.json'*/
-
-      echo "scan completed"
-      prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results-result.json'
-      echo "published completed"
-    }
-  }
 
     stage('Build vote') {
       steps {
@@ -87,7 +54,39 @@ pipeline {
       }
     }
     
+    stage ('Scan_Prisma'){
+      steps {
+        script { 
+          FAILED_STAGE=env.STAGE_NAME
+          echo "Scan Prisma"
+          Prisma_Scan_launched = 1
+        }
+        
+        prismaCloudScanImage  ca: '',
+                              cert: '',
+                              dockerAddress: 'unix:///var/run/docker.sock',
+                              ignoreImageBuildTime: true,
+                              image: 'ocd-cloud-lyon/*',
+                              key: '',
+                              logLevel: 'info',
+                              podmanPath: '',
+                              project: '',
+                              resultsFile: 'prisma-cloud-scan-results.json'
+        /*prismaCloudScanImage  ca: '', 
+                              cert: '',
+                              dockerAddress: 'unix:///var/run/docker.sock', 
+                              image: 'ocd-cloud-lyon/result:latest', 
+                              key: '', 
+                              logLevel: 'info', 
+                              podmanPath: '', 
+                              project: '', 
+                              resultsFile: 'prisma-cloud-scan-results-result.json'*/
 
+        echo "scan completed"
+        prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+        echo "published completed"
+      }
+    }
 
 	/*stage('Scan_Aqua_img_result'){
 			steps{
