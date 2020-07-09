@@ -46,7 +46,18 @@ pipeline {
         echo "Scan Prisma"
         Prisma_Scan_launched = 1
       }
-      prismaCloudScanImage  ca: '', 
+      
+      prismaCloudScanImage  ca: '',
+                            cert: '',
+                            dockerAddress: 'unix:///var/run/docker.sock',
+                            ignoreImageBuildTime: true,
+                            image: 'ocd-cloud-lyon/result',
+                            key: '',
+                            logLevel: 'info',
+                            podmanPath: '',
+                            project: '',
+                            resultsFile: 'prisma-cloud-scan-results-result.json'
+      /*prismaCloudScanImage  ca: '', 
                             cert: '',
                             dockerAddress: 'unix:///var/run/docker.sock', 
                             image: 'ocd-cloud-lyon/result:latest', 
@@ -54,7 +65,7 @@ pipeline {
                             logLevel: 'info', 
                             podmanPath: '', 
                             project: '', 
-                            resultsFile: 'prisma-cloud-scan-results-result.json'
+                            resultsFile: 'prisma-cloud-scan-results-result.json'*/
 
       echo "scan completed"
       prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results-result.json'
