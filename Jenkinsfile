@@ -80,7 +80,7 @@ pipeline {
 			}
 		}*/
 
-	stage('Scan_Aqua_img_result'){
+	/*stage('Scan_Aqua_img_result'){
 			steps{
 				script { 
 					FAILED_STAGE=env.STAGE_NAME
@@ -89,7 +89,7 @@ pipeline {
 	      		aquaMicroscanner imageName: 'ocd-cloud-lyon/result', notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html'
 				aqua customFlags: '', hideBase: false, hostedImage: '', localImage: 'sma-maquette', locationType: 'local', notCompliesCmd: '', onDisallowed: 'ignore', policies: '', register: false, registry: '', showNegligible: false
 			}
-	    }
+	    }*/
     
     stage('Push result image') {
       steps {
