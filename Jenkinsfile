@@ -53,32 +53,43 @@ pipeline {
       }
     }
     
-    		stage ('Scan_prisma'){
-			steps {
+   /* stage ('Scan_prisma'){
+	steps {
+		script { 
+			FAILED_STAGE=env.STAGE_NAME
+			echo "Scan Prisma"
+			Prisma_Scan_launched = 1
+		}
+		twistlockScan 	ca: '',
+							cert: '', 
+							compliancePolicy: 'warn', 
+							containerized: false, 
+							dockerAddress: 'unix:///var/run/docker.sock', 
+							gracePeriodDays: 120, 
+							ignoreImageBuildTime: true, 
+							image: 'ocd-cloud-lyon:latest', 
+							key: '', 
+							logLevel: 'true', 
+							policy: 'critical', 
+							requirePackageUpdate: true, 
+							timeout: 10
+
+		echo "scan completed"
+		//twistlockPublish ca: '', cert: '', dockerAddress: 'unix:///var/run/docker.sock', image: 'ocd-cloud-lyon:latest', key: '', logLevel: 'true', timeout: 10
+		//echo "published completed"
+			}
+		}*/
+
+	stage('Scan_Aqua_img_result'){
+			steps{
 				script { 
 					FAILED_STAGE=env.STAGE_NAME
-					echo "Scan Prisma"
-					Prisma_Scan_launched = 1
+					echo "Scan_Aqua"
 				}
-				twistlockScan 	ca: '',
-							 	cert: '', 
-							 	compliancePolicy: 'warn', 
-							 	containerized: false, 
-							 	dockerAddress: 'unix:///var/run/docker.sock', 
-							 	gracePeriodDays: 120, 
-							 	ignoreImageBuildTime: true, 
-							 	image: 'ocd-cloud-lyon:latest', 
-							 	key: '', 
-							 	logLevel: 'true', 
-							 	policy: 'critical', 
-							 	requirePackageUpdate: true, 
-							 	timeout: 10
-
-				echo "scan completed"
-				//twistlockPublish ca: '', cert: '', dockerAddress: 'unix:///var/run/docker.sock', image: 'ocd-cloud-lyon:latest', key: '', logLevel: 'true', timeout: 10
-				//echo "published completed"
+	      		aquaMicroscanner imageName: 'ocd-cloud-lyon/result', notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html'
+				aqua customFlags: '', hideBase: false, hostedImage: '', localImage: 'sma-maquette', locationType: 'local', notCompliesCmd: '', onDisallowed: 'ignore', policies: '', register: false, registry: '', showNegligible: false
 			}
-		}
+	    }
     
     stage('Push result image') {
       steps {
