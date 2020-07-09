@@ -39,6 +39,39 @@ pipeline {
       }
     } 
     
+   stage ('Scan_Result'){
+    steps {
+      script { 
+        FAILED_STAGE=env.STAGE_NAME
+        echo "Scan Prisma"
+        Prisma_Scan_launched = 1
+      }
+      twistlockScan   ca: '',
+                      cert: '', 
+                      compliancePolicy: 'warn', 
+                      containerized: false, 
+                      dockerAddress: 'unix:///var/run/docker.sock', 
+                      gracePeriodDays: 30, 
+                      ignoreImageBuildTime: true, 
+                      image: 'ocd-cloud-lyon/result', 
+                      key: '', 
+                      logLevel: 'true', 
+                      policy: 'critical', 
+                      requirePackageUpdate: true, 
+                      timeout: 10
+
+      echo "scan completed"
+      twistlockPublish  ca: '',
+                        cert: '',
+                        dockerAddress: 'unix:///var/run/docker.sock',
+                        image: 'ocd-cloud-lyon/result',
+                        key: '',
+                        logLevel: 'true',
+                        timeout: 10
+      echo "published completed"
+    }
+    }*/
+
     stage('Build vote') {
       steps {
         // --network=host added to ensure that container has internet access while being build
@@ -53,32 +86,7 @@ pipeline {
       }
     }
     
-   /* stage ('Scan_prisma'){
-	steps {
-		script { 
-			FAILED_STAGE=env.STAGE_NAME
-			echo "Scan Prisma"
-			Prisma_Scan_launched = 1
-		}
-		twistlockScan 	ca: '',
-							cert: '', 
-							compliancePolicy: 'warn', 
-							containerized: false, 
-							dockerAddress: 'unix:///var/run/docker.sock', 
-							gracePeriodDays: 120, 
-							ignoreImageBuildTime: true, 
-							image: 'ocd-cloud-lyon:latest', 
-							key: '', 
-							logLevel: 'true', 
-							policy: 'critical', 
-							requirePackageUpdate: true, 
-							timeout: 10
 
-		echo "scan completed"
-		//twistlockPublish ca: '', cert: '', dockerAddress: 'unix:///var/run/docker.sock', image: 'ocd-cloud-lyon:latest', key: '', logLevel: 'true', timeout: 10
-		//echo "published completed"
-			}
-		}*/
 
 	/*stage('Scan_Aqua_img_result'){
 			steps{
