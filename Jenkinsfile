@@ -46,28 +46,18 @@ pipeline {
         echo "Scan Prisma"
         Prisma_Scan_launched = 1
       }
-      twistlockScan   ca: '',
-                      cert: '', 
-                      compliancePolicy: 'warn', 
-                      containerized: false, 
-                      dockerAddress: 'unix:///var/run/docker.sock', 
-                      gracePeriodDays: 30, 
-                      ignoreImageBuildTime: true, 
-                      image: 'ocd-cloud-lyon/result', 
-                      key: '', 
-                      logLevel: 'true', 
-                      policy: 'critical', 
-                      requirePackageUpdate: true, 
-                      timeout: 10
+      prismaCloudScanImage  ca: '', 
+                            cert: '',
+                            dockerAddress: 'unix:///var/run/docker.sock', 
+                            image: 'ocd-cloud-lyon/result', 
+                            key: '', 
+                            logLevel: 'info', 
+                            podmanPath: '', 
+                            project: '', 
+                            resultsFile: 'prisma-cloud-scan-results-result.json'
 
       echo "scan completed"
-      twistlockPublish  ca: '',
-                        cert: '',
-                        dockerAddress: 'unix:///var/run/docker.sock',
-                        image: 'ocd-cloud-lyon/result',
-                        key: '',
-                        logLevel: 'true',
-                        timeout: 10
+      prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results-result.json'
       echo "published completed"
     }
   }
