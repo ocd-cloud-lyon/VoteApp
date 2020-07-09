@@ -70,7 +70,7 @@ pipeline {
                         timeout: 10
       echo "published completed"
     }
-    }*/
+  }
 
     stage('Build vote') {
       steps {
