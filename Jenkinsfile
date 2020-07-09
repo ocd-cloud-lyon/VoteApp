@@ -72,33 +72,14 @@ pipeline {
                               podmanPath: '',
                               project: '',
                               resultsFile: 'prisma-cloud-scan-results.json'
-        /*prismaCloudScanImage  ca: '', 
-                              cert: '',
-                              dockerAddress: 'unix:///var/run/docker.sock', 
-                              image: 'ocd-cloud-lyon/result:latest', 
-                              key: '', 
-                              logLevel: 'info', 
-                              podmanPath: '', 
-                              project: '', 
-                              resultsFile: 'prisma-cloud-scan-results-result.json'*/
 
         echo "scan completed"
-        prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
-        echo "published completed"
+        script {
+          Prisma_Scan_Done = 1
+        }
       }
     }
 
-	/*stage('Scan_Aqua_img_result'){
-			steps{
-				script { 
-					FAILED_STAGE=env.STAGE_NAME
-					echo "Scan_Aqua"
-				}
-	      		aquaMicroscanner imageName: 'ocd-cloud-lyon/result', notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html'
-				aqua customFlags: '', hideBase: false, hostedImage: '', localImage: 'sma-maquette', locationType: 'local', notCompliesCmd: '', onDisallowed: 'ignore', policies: '', register: false, registry: '', showNegligible: false
-			}
-	    }*/
-    
     stage('Push result image') {
       steps {
         script{
@@ -142,6 +123,19 @@ pipeline {
         script {
           withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-file', namespace: '', serverUrl: '') {
             sh '/usr/local/bin/helm upgrade -i voteapp VoteApp'
+          }
+        }
+      }
+    }
+  }
+  post {
+    always {
+      script {
+        if (Prisma_Scan_Done == 1){
+          script {
+            echo "scan lancé maintenant on pousse les resultats"        
+            prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+            echo "published completed"
           }
         }
       }
