@@ -53,6 +53,33 @@ pipeline {
       }
     }
     
+    		stage ('Scan_prisma'){
+			steps {
+				script { 
+					FAILED_STAGE=env.STAGE_NAME
+					echo "Scan Prisma"
+					Prisma_Scan_launched = 1
+				}
+				twistlockScan 	ca: '',
+							 	cert: '', 
+							 	compliancePolicy: 'warn', 
+							 	containerized: false, 
+							 	dockerAddress: 'unix:///var/run/docker.sock', 
+							 	gracePeriodDays: 120, 
+							 	ignoreImageBuildTime: true, 
+							 	image: 'ocd-cloud-lyon:latest', 
+							 	key: '', 
+							 	logLevel: 'true', 
+							 	policy: 'critical', 
+							 	requirePackageUpdate: true, 
+							 	timeout: 10
+
+				echo "scan completed"
+				//twistlockPublish ca: '', cert: '', dockerAddress: 'unix:///var/run/docker.sock', image: 'ocd-cloud-lyon:latest', key: '', logLevel: 'true', timeout: 10
+				//echo "published completed"
+			}
+		}
+    
     stage('Push result image') {
       steps {
         script{
