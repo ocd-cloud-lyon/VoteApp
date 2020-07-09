@@ -16,7 +16,7 @@ spec:
         app: redis
     spec:
       containers:
-      - image: redis:alpine
+      - image: "{{ .Values.image.repository }}/redis:{{ .Values.image.version }}"
         name: redis
         ports:
         - containerPort: 6379

@@ -53,6 +53,20 @@ pipeline {
         sh 'docker build -t ocd-cloud-lyon/worker ./worker --network=host'
       }
     }
+
+    stage('Build db') {
+      steps {
+        // --network=host added to ensure that container has internet access while being build
+        sh 'docker build -t ocd-cloud-lyon/db ./db --network=host'
+      }
+    }
+    
+    stage('Build redis') {
+      steps {
+        // --network=host added to ensure that container has internet access while being build
+        sh 'docker build -t ocd-cloud-lyon/redis ./redis --network=host'
+      }
+    }
     
     stage ('Scan_Prisma'){
       steps {
@@ -107,6 +121,28 @@ pipeline {
           docker.withRegistry(registry, registryCredential) {
             docker.image('ocd-cloud-lyon/worker').push('latest')
             docker.image('ocd-cloud-lyon/worker').push("${env.BUILD_NUMBER}")
+          }
+        } 
+      }
+    }
+
+    stage('Push db image') {
+      steps {
+        script{
+          docker.withRegistry(registry, registryCredential) {
+            docker.image('ocd-cloud-lyon/db').push('latest')
+            docker.image('ocd-cloud-lyon/db').push("${env.BUILD_NUMBER}")
+          }
+        } 
+      }
+    }
+
+    stage('Push redis image') {
+      steps {
+        script{
+          docker.withRegistry(registry, registryCredential) {
+            docker.image('ocd-cloud-lyon/redis').push('latest')
+            docker.image('ocd-cloud-lyon/redis').push("${env.BUILD_NUMBER}")
           }
         } 
       }
