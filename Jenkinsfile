@@ -141,7 +141,7 @@ pipeline {
        
         script {
           withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-file', namespace: '', serverUrl: '') {
-            sh '/usr/local/bin/helm upgrade voteapp VoteApp'
+            sh '/usr/local/bin/helm upgrade -i voteapp VoteApp'
           }
         }
       }
