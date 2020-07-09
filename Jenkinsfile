@@ -49,7 +49,7 @@ pipeline {
       prismaCloudScanImage  ca: '', 
                             cert: '',
                             dockerAddress: 'unix:///var/run/docker.sock', 
-                            image: 'ocd-cloud-lyon/result', 
+                            image: 'ocd-cloud-lyon/result:latest', 
                             key: '', 
                             logLevel: 'info', 
                             podmanPath: '', 
