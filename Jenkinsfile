@@ -5,15 +5,11 @@ pipeline {
   }
    // Some global default variables
   environment {
-  registry = "https://573329840855.dkr.ecr.eu-west-3.amazonaws.com"
-  registryCredential = 'ecr:eu-west-3:aws-ecr-credential'
-      dockerImage = ''
-      NomProjet = 'VoteApp'
-      NameSpace = 'VoteApp-NS'
-  //DeployName = 'VoteApp-NS'
-  //ServiceName = 'hello-you-svc'
-  RuningImageBuild = 0
-  TargetImageBuild = 0
+    registry = "https://573329840855.dkr.ecr.eu-west-3.amazonaws.com"
+    registryCredential = 'ecr:eu-west-3:aws-ecr-credential'
+    dockerImage = ''
+    NomProjet = 'VoteApp'
+    NameSpace = 'VoteApp-NS'
   }
 
   agent any
@@ -80,6 +76,7 @@ pipeline {
                               cert: '',
                               dockerAddress: 'unix:///var/run/docker.sock',
                               ignoreImageBuildTime: true,
+                              // on scanne toutes les images ocd-cloud-lyon
                               image: 'ocd-cloud-lyon/*',
                               key: '',
                               logLevel: 'info',
